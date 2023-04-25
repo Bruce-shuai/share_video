@@ -8,11 +8,13 @@ import '../styles/globals.css';
 import Head from 'next/head';
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [isSSR, setIsSSR] = useState(true);
-
   useEffect(() => {
     setIsSSR(false);
   }, []);
-
+  console.log(
+    'process.env.NEXT_PUBLIC_GOOGLE_API_TOKEN',
+    process.env.NEXT_PUBLIC_GOOGLE_API_TOKEN
+  );
   if (isSSR) return null;
   return (
     <GoogleOAuthProvider
