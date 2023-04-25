@@ -73,7 +73,7 @@ const Navbar = () => {
                 <div>
                   <Image
                     className="rounded-full cursor-pointer"
-                    src="https://lh3.googleusercontent.com/a/AGNmyxbPpijCeiWaQ3j_ZTNQMfy7iVe5dzEnlS2xk3i2=s96-c"
+                    src={user.image}
                     alt="user"
                     width={40}
                     height={40}

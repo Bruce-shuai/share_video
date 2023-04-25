@@ -1,18 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/router";
-import { GoVerified } from "react-icons/go";
-import Image from "next/image";
-import Link from "next/link";
-import { MdOutlineCancel } from "react-icons/md";
-import { BsFillPlayFill } from "react-icons/bs";
-import { HiVolumeUp, HiVolumeOff } from "react-icons/hi";
-
-import Comments from "../../components/Comments";
-import { BASE_URL } from "../../utils";
-import LikeButton from "../../components/LikeButton";
-import useAuthStore from "../../store/authStore";
-import { Video } from "../../types";
-import axios from "axios";
+import React, { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
+import { GoVerified } from 'react-icons/go';
+import Image from 'next/image';
+import Link from 'next/link';
+import { MdOutlineCancel } from 'react-icons/md';
+import { BsFillPlayFill } from 'react-icons/bs';
+import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
+import BulletScreen, { StyledBullet } from 'rc-bullets';
+import Comments from '../../components/Comments';
+import { BASE_URL } from '../../utils';
+import LikeButton from '../../components/LikeButton';
+import useAuthStore from '../../store/authStore';
+import { Video } from '../../types';
+import axios from 'axios';
 
 interface IProps {
   postDetails: Video;
@@ -23,7 +23,7 @@ const Detail = ({ postDetails }: IProps) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isVideoMuted, setIsVideoMuted] = useState<boolean>(false);
   const [isPostingComment, setIsPostingComment] = useState<boolean>(false);
-  const [comment, setComment] = useState<string>("");
+  const [comment, setComment] = useState<string>('');
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
@@ -42,7 +42,49 @@ const Detail = ({ postDetails }: IProps) => {
   const loaderProp = ({ src }: { src: string }) => {
     return src;
   };
+  const headUrl = userProfile?.image;
 
+  // 弹幕屏幕
+  const [screen, setScreen] = useState<any>(null);
+  // 弹幕内容
+  const [bullet, setBullet] = useState<any>('');
+  useEffect(() => {
+    // 给页面中某个元素初始化弹幕屏幕，一般为一个大区块。此处的配置项全局生效
+    let s = new BulletScreen('.screen', { duration: 20 });
+    // or
+    // let s=new BulletScreen(document.querySelector('.screen));
+    setScreen(s);
+  }, []);
+
+  // 弹幕内容输入事件处理
+  const handleChange = ({ target: { value } }: { target: any }) => {
+    setBullet(value);
+  };
+  // 发送弹幕
+  const handleSend = () => {
+    if (screen && bullet) {
+      // push 纯文本
+      screen.push(bullet);
+      // or 使用 StyledBullet
+
+      screen.push(
+        <StyledBullet
+          head={headUrl}
+          msg={bullet}
+          backgroundColor={'#fff'}
+          size="large"
+        />
+      );
+      // or 还可以这样使用，效果等同使用 StyledBullet 组件
+      screen.push({
+        msg: bullet,
+        head: headUrl,
+        color: '#eee',
+        size: 'large',
+        backgroundColor: 'rgba(2,2,2,.3)',
+      });
+    }
+  };
   useEffect(() => {
     if (post && videoRef?.current) {
       videoRef.current.muted = isVideoMuted;
@@ -72,7 +114,7 @@ const Detail = ({ postDetails }: IProps) => {
         });
 
         setPost({ ...post, comments: res.data.comments });
-        setComment("");
+        setComment('');
         setIsPostingComment(false);
       }
     }
@@ -89,7 +131,7 @@ const Detail = ({ postDetails }: IProps) => {
               </p>
             </div>
             <div className="relative">
-              <div className="lg:h-[100vh] h-[60vh]">
+              <div className="lg:h-[100vh] h-[60vh] screen">
                 <video
                   ref={videoRef}
                   onClick={onVideoClick}
@@ -133,7 +175,7 @@ const Detail = ({ postDetails }: IProps) => {
                   />
                   <div>
                     <div className="text-xl font-bold lowercase tracking-wider flex gap-2 items-center justify-center">
-                      {post.postedBy.userName.replace(/\s+/g, "")}{" "}
+                      {post.postedBy.userName.replace(/\s+/g, '')}{' '}
                       <GoVerified className="text-blue-400 text-xl" />
                     </div>
                     <p className="text-md"> {post.postedBy.userName}</p>
@@ -142,6 +184,20 @@ const Detail = ({ postDetails }: IProps) => {
               </Link>
               <div className="px-10">
                 <p className=" text-md text-gray-600">{post.caption}</p>
+              </div>
+              {/* 弹幕 */}
+              <div className="flex flex-row gap-3 justify-start items-center ml-8 mt-14">
+                <input
+                  value={bullet}
+                  onChange={handleChange}
+                  className="border-[2px] rounded-md h-10 border-gray-800 pl-2 text-lg"
+                />
+                <button
+                  onClick={handleSend}
+                  className="border-[1px] rounded-md h-8 border-gray-800 w-24"
+                >
+                  发送弹幕
+                </button>
               </div>
               <div className="mt-10 px-10">
                 {userProfile && (
@@ -153,6 +209,7 @@ const Detail = ({ postDetails }: IProps) => {
                   />
                 )}
               </div>
+
               <Comments
                 comment={comment}
                 setComment={setComment}

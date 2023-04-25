@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import { NextPage } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { HiVolumeUp, HiVolumeOff } from "react-icons/hi";
-import { BsFillPlayFill, BsFillPauseFill } from "react-icons/bs";
-import { GoVerified } from "react-icons/go";
-import { BsPlay } from "react-icons/bs";
+import React, { useEffect, useRef, useState } from 'react';
+import { NextPage } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
+import { BsFillPlayFill, BsFillPauseFill } from 'react-icons/bs';
+import { GoVerified } from 'react-icons/go';
+import { BsPlay } from 'react-icons/bs';
 
-import { Video } from "./../types";
+import { Video } from '../types';
 
 interface IProps {
   post: Video;
@@ -89,7 +89,7 @@ const VideoCard: NextPage<IProps> = ({
             <Link href={`/profile/${postedBy?._id}`}>
               <div className="flex items-center gap-2">
                 <p className="flex gap-2 items-center md:text-md font-bold text-primary">
-                  {postedBy?.userName}{" "}
+                  {postedBy?.userName}{' '}
                   <GoVerified className="text-blue-400 text-md" />
                 </p>
                 <p className="capitalize font-medium text-xs text-gray-500 hidden md:block">
