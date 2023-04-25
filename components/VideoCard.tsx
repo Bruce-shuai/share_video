@@ -6,7 +6,7 @@ import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
 import { BsFillPlayFill, BsFillPauseFill } from 'react-icons/bs';
 import { GoVerified } from 'react-icons/go';
 import { BsPlay } from 'react-icons/bs';
-
+import { InView } from 'react-intersection-observer';
 import { Video } from './../types';
 
 interface IProps {
@@ -22,7 +22,7 @@ const VideoCard: NextPage<IProps> = ({
   const [isHover, setIsHover] = useState(false);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-
+  const [inView, setInView] = React.useState(false);
   const onVideoPress = () => {
     if (playing) {
       videoRef?.current?.pause();
@@ -35,6 +35,16 @@ const VideoCard: NextPage<IProps> = ({
   const loaderProp = ({ src }: { src: string }) => {
     return src;
   };
+  useEffect(() => {
+    console.log(`inView ${_id}`, inView);
+    if (inView) {
+      videoRef?.current?.play();
+      setPlaying(true);
+    } else {
+      videoRef?.current?.pause();
+      setPlaying(false);
+    }
+  }, [inView]);
   useEffect(() => {
     if (videoRef?.current) {
       videoRef.current.muted = isVideoMuted;
@@ -67,8 +77,8 @@ const VideoCard: NextPage<IProps> = ({
   }
 
   return (
-    <div className="flex flex-col border-b-2 border-gray-200 pb-6">
-      <div>
+    <div className="flex flex-col border-b-[1px] border-gray-200 pb-6">
+      <InView onChange={setInView}>
         <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded ">
           <div className="md:w-16 md:h-16 w-10 h-10">
             <Link href={`/profile/${postedBy?._id}`}>
@@ -102,7 +112,7 @@ const VideoCard: NextPage<IProps> = ({
             </Link>
           </div>
         </div>
-      </div>
+      </InView>
 
       <div className="lg:ml-20 flex gap-4 relative">
         <div
