@@ -34,28 +34,23 @@ const Navbar = () => {
   };
   return (
     <div className="w-full flex justify-between items-center border-b-2 border-gray-200 py-2 px-4">
-      <Link href="/">
-        <div className="w-[100px] md:w-[129px] md:h-[30px] h-[38px]">
-          <BsFillCameraVideoFill className="fill-red-500 hover:fill-red-600 cursor-pointer text-4xl" />
-        </div>
-      </Link>
-
-      <div className="relative hidden md:block">
+      <div className="relative hidden md:block left-32">
         <form
           onSubmit={handleSearch}
-          className="absolute md:static top-10 -left-20 "
+          className="absolute md:static top-10  flex flex-row justify-center items-center"
         >
           <input
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
-            className="bg-primary p-3 md:text-md font-medium border-2 border-gray-300 focus:outline-none focus:border-2 focus:border-gray-400 w-[400px] md:w-[450px] rounded-full  md:top-0"
+            className="text-white p-3 md:text-md font-medium border-2 border-gray-300 focus:outline-none focus:border-2 focus:border-gray-400 w-[450px]  rounded-lg bg-gray-700  md:top-0"
             placeholder="搜索更多视频~"
           />
           <button
             onClick={handleSearch}
-            className="absolute md:right-5 right-6 top-4 border-l-2 border-gray-300 pl-4 text-2xl text-gray-400"
+            className="absolute md:right-5 right-6 flex flex-row justify-center items-center border-gray-300 pl-4 text-lg h-full text-gray-400"
           >
             <BiSearch />
+            搜索
           </button>
         </form>
       </div>

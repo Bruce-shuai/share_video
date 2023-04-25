@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import { NextPage } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { HiVolumeUp, HiVolumeOff } from "react-icons/hi";
-import { BsFillPlayFill, BsFillPauseFill } from "react-icons/bs";
-import { GoVerified } from "react-icons/go";
-import { BsPlay } from "react-icons/bs";
+import React, { useEffect, useRef, useState } from 'react';
+import { NextPage } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
+import { BsFillPlayFill, BsFillPauseFill } from 'react-icons/bs';
+import { GoVerified } from 'react-icons/go';
+import { BsPlay } from 'react-icons/bs';
 
-import { Video } from "./../types";
+import { Video } from './../types';
 
 interface IProps {
   post: Video;
@@ -76,7 +76,7 @@ const VideoCard: NextPage<IProps> = ({
                 <Image
                   width={62}
                   height={62}
-                  className=" rounded-full"
+                  className=" rounded-lg"
                   src={postedBy?.image}
                   alt="user-profile"
                   layout="responsive"
@@ -88,17 +88,17 @@ const VideoCard: NextPage<IProps> = ({
           <div>
             <Link href={`/profile/${postedBy?._id}`}>
               <div className="flex items-center gap-2">
-                <p className="flex gap-2 items-center md:text-md font-bold text-primary">
-                  {postedBy?.userName}{" "}
+                <p className="flex gap-2 items-center md:text-md font-bold text-white">
+                  {postedBy?.userName}{' '}
                   <GoVerified className="text-blue-400 text-md" />
                 </p>
-                <p className="capitalize font-medium text-xs text-gray-500 hidden md:block">
+                <p className="capitalize font-medium text-xs text-white hidden md:block">
                   {postedBy?.userName}
                 </p>
               </div>
             </Link>
             <Link href={`/detail/${_id}`}>
-              <p className="mt-2 font-normal ">{caption}</p>
+              <p className="mt-2 font-normal text-gray-300">{caption}</p>
             </Link>
           </div>
         </div>
@@ -108,35 +108,35 @@ const VideoCard: NextPage<IProps> = ({
         <div
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}
-          className="rounded-3xl"
+          className="rounded-3xl h-[400px] aspect-[16/9]"
         >
           <Link href={`/detail/${_id}`}>
             <video
               loop
               ref={videoRef}
               src={video.asset.url}
-              className="lg:w-[600px] h-[300px] md:h-[400px] lg:h-[528px] w-[200px] rounded-2xl cursor-pointer bg-gray-100"
+              className=" rounded-2xl cursor-pointer bg-gray-100 w-full h-full"
             ></video>
           </Link>
 
           {isHover && (
-            <div className="absolute bottom-6 cursor-pointer left-8 md:left-14 lg:left-0 flex gap-10 lg:justify-between w-[100px] md:w-[50px] lg:w-[600px] p-3">
+            <div className="relative bottom-16 cursor-pointer  flex gap-10 lg:justify-between flex-between p-3">
               {playing ? (
                 <button onClick={onVideoPress}>
-                  <BsFillPauseFill className="text-black text-2xl lg:text-4xl" />
+                  <BsFillPauseFill className="text-gray-600 text-2xl lg:text-4xl" />
                 </button>
               ) : (
                 <button onClick={onVideoPress}>
-                  <BsFillPlayFill className="text-black text-2xl lg:text-4xl" />
+                  <BsFillPlayFill className="text-gray-600 text-2xl lg:text-4xl" />
                 </button>
               )}
               {isVideoMuted ? (
                 <button onClick={() => setIsVideoMuted(false)}>
-                  <HiVolumeOff className="text-black text-2xl lg:text-4xl" />
+                  <HiVolumeOff className="text-gray-600 text-2xl lg:text-4xl" />
                 </button>
               ) : (
                 <button onClick={() => setIsVideoMuted(true)}>
-                  <HiVolumeUp className="text-black text-2xl lg:text-4xl" />
+                  <HiVolumeUp className="text-gray-600 text-2xl lg:text-4xl" />
                 </button>
               )}
             </div>

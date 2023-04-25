@@ -1,43 +1,41 @@
-import React, { useState } from "react";
-import { NextPage } from "next";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import { AiFillHome, AiOutlineMenu } from "react-icons/ai";
-import { ImCancelCircle } from "react-icons/im";
-
-import SuggestedAccounts from "./SuggestedAccounts";
-import Discover from "./Discover";
-import Footer from "./Footer";
-import useAuthStore from "../store/authStore";
+import React, { useState } from 'react';
+import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { AiFillHome, AiOutlineMenu } from 'react-icons/ai';
+import { ImCancelCircle } from 'react-icons/im';
+import Image from 'next/image';
+import SuggestedAccounts from './SuggestedAccounts';
+import Discover from './Discover';
+import Footer from './Footer';
+import useAuthStore from '../store/authStore';
 const Sidebar: NextPage = () => {
-  const [showSidebar, setShowSidebar] = useState<Boolean>(true);
   const { pathname } = useRouter();
   const { fetchAllUsers, allUsers }: any = useAuthStore();
 
   const activeLink =
-    "flex items-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointer font-semibold text-red-500 active:text-red-600 hover:text-red-600 rounded";
+    'flex items-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointer font-semibold text-red-500 active:text-red-600 hover:text-red-600 rounded';
 
   const normalLink =
-    "flex items-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointer font-semibold rounded";
+    'flex items-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointer font-semibold rounded';
 
   return (
-    <div>
-      <div
-        className="justify-center items-center xl:hidden m-2 ml-4 mt-3 text-xl pl-3 cursor-pointer"
-        onClick={() => setShowSidebar(!showSidebar)}
-      >
-        {showSidebar ? <ImCancelCircle /> : <AiOutlineMenu />}
-      </div>
-      {showSidebar && (
-        <div className="xl:w-400 w-20 flex flex-col justify-start mb-10 border-r-2 border-gray-100 xl:border-0 p-3 ">
-          <div className="xl:border-b-2 border-gray-200 xl:pb-4">
+    <div className="h-full">
+      {
+        <div className="w-48 h-full flex flex-col justify-start mb-10  p-3 bg-slate-800">
+          <div>
             <Link href="/">
-              <div className={pathname === "/" ? activeLink : normalLink}>
+              <div className={pathname === '/' ? activeLink : normalLink}>
                 <p className="text-2xl">
-                  <AiFillHome />
+                  <Image
+                    src="/images/logo.webp"
+                    alt="logo"
+                    width={50}
+                    height={50}
+                  />
                 </p>
-                <span className="capitalize text-xl hidden xl:block">
-                  个人首页
+                <span className=" text-3xl hidden xl:block text-white">
+                  爱生活
                 </span>
               </div>
             </Link>
@@ -48,9 +46,8 @@ const Sidebar: NextPage = () => {
             fetchAllUsers={fetchAllUsers}
             allUsers={allUsers}
           />
-          <Footer />
         </div>
-      )}
+      }
     </div>
   );
 };
