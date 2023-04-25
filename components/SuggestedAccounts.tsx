@@ -26,7 +26,7 @@ const SuggestedAccounts: NextPage<IProps> = ({ fetchAllUsers, allUsers }) => {
     <div className=" border-gray-200 pb-4">
       <p className="text-white font-bold m-3 mt-4  flex items-center gap-1">
         <AiOutlineUserAdd className="text-xl" />
-        关注
+        推荐
       </p>
       <div>
         {users?.slice(0, 6).map((user: IUser) => (
