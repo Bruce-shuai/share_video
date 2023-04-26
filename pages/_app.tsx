@@ -15,6 +15,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     'process.env.NEXT_PUBLIC_GOOGLE_API_TOKEN',
     process.env.NEXT_PUBLIC_GOOGLE_API_TOKEN
   );
+
+  console.log(
+    'process.env.NEXT_PUBLIC_BASE_URL',
+    process.env.NEXT_PUBLIC_BASE_URL
+  );
   if (isSSR) return null;
   return (
     <GoogleOAuthProvider
